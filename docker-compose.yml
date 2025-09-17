@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mydb
+    environment:
+      MYSQL_ROOT_PASSWORD: pass123
+      MYSQL_DATABASE: testdb
+    ports:
+      - "3306:3306"
+    networks:
+      - appnet
+
+  nodeapp:
+    build: .
+    container_name: mynodeapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    restart: always
+    networks:
+      - appnet
+
+networks:
+  appnet:
+
